@@ -17,7 +17,7 @@ Global Open Scope loc_scope.
 Inductive base_lit : Set :=
 | LitPoison | LitLoc (l : loc) | LitInt (n : Z).
 Inductive bin_op : Set :=
-| PlusOp | MinusOp | LeOp | EqOp | OffsetOp.
+| PlusOp | MinusOp | MultOp | LeOp | EqOp | OffsetOp.
 Inductive order : Set :=
 | ScOrd | Na1Ord | Na2Ord.
 
@@ -224,6 +224,8 @@ Inductive bin_op_eval (σ : state) : bin_op → base_lit → base_lit → base_l
     bin_op_eval σ PlusOp (LitInt z1) (LitInt z2) (LitInt (z1 + z2))
 | BinOpMinus z1 z2 :
     bin_op_eval σ MinusOp (LitInt z1) (LitInt z2) (LitInt (z1 - z2))
+| BinOpMult z1 z2 :
+    bin_op_eval σ MultOp (LitInt z1) (LitInt z2) (LitInt (z1 * z2))
 | BinOpLe z1 z2 :
     bin_op_eval σ LeOp (LitInt z1) (LitInt z2) (lit_of_bool $ bool_decide (z1 ≤ z2))
 | BinOpEqTrue l1 l2 :
